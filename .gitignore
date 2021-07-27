@@ -10,3 +10,4 @@ rpyc.egg-info
 *.egg
 *.class
 build/
+venv/*
