@@ -167,6 +167,12 @@ class DeployedServer(object):
             except Exception:
                 pass
             self.tun = None
+        if self._tmpdir_ctx is not None:
+            try:
+                self._tmpdir_ctx.__exit__(None, None, None)
+            except Exception:
+                pass
+            self._tmpdir_ctx = None
         if self.remote_machine is not None:
             try:
                 self.remote_machine._session.proc.terminate()
@@ -175,12 +181,6 @@ class DeployedServer(object):
             except Exception:
                 pass
             self.remote_machine = None
-        if self._tmpdir_ctx is not None:
-            try:
-                self._tmpdir_ctx.__exit__(None, None, None)
-            except Exception:
-                pass
-            self._tmpdir_ctx = None
 
     def _connect_sock(self):
         if self.local_port is None:
